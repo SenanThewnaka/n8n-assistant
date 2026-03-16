@@ -1,0 +1,1661 @@
+{
+  "success": true,
+  "data": {
+    "updatedAt": "2026-03-16T18:00:55.422Z",
+    "createdAt": "2026-03-11T17:09:52.132Z",
+    "id": "PkKgu4sTC3L7pEJ6",
+    "name": "My workflow",
+    "description": null,
+    "active": true,
+    "isArchived": false,
+    "nodes": [
+      {
+        "parameters": {
+          "sessionIdType": "customKey",
+          "sessionKey": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}"
+        },
+        "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+        "typeVersion": 1.3,
+        "position": [
+          224,
+          208
+        ],
+        "id": "6643f054-ecb6-43d3-8b3f-31624f5d1ac3",
+        "name": "Simple Memory"
+      },
+      {
+        "parameters": {
+          "q": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Search_Query__q_', ``, 'string') }}",
+          "additionalFields": {
+            "num": 5
+          },
+          "requestOptions": {}
+        },
+        "type": "n8n-nodes-serpapi.serpApiTool",
+        "typeVersion": 1,
+        "position": [
+          368,
+          208
+        ],
+        "id": "4ef95fba-8c05-448b-aefc-3cd3485e0436",
+        "name": "Google search in SerpApi",
+        "credentials": {
+          "serpApi": {
+            "id": "dVGdG5yLanehB5uH",
+            "name": "SerpAPI account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "options": {
+            "systemMessage": "=Today's date is {{ $now.setZone('Asia/Colombo').toFormat('cccc, MMMM dd, yyyy') }}. You are Synthora, the Personal Assistant.\n\n### Skills:\n- **Vision**: Analyzes images sent via WhatsApp.\n- **Voice**: Processes voice notes (transcribed as text).\n- **Daily Brief**: Summarizes Calendar & Gmail proactively at 8 AM.\n- **LinkedIn**: Posts to your professional feed.\n\nStay professional and proactive."
+          }
+        },
+        "type": "@n8n/n8n-nodes-langchain.agent",
+        "typeVersion": 3.1,
+        "position": [
+          208,
+          0
+        ],
+        "id": "41ab4eae-052b-4199-8990-705d22c47bb9",
+        "name": "AI Agent",
+        "executeOnce": true,
+        "alwaysOutputData": true
+      },
+      {
+        "parameters": {
+          "model": "llama-3.1-8b-instant",
+          "options": {}
+        },
+        "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+        "typeVersion": 1,
+        "position": [
+          80,
+          208
+        ],
+        "id": "86b71827-1431-49a9-9be1-fb7f450e8599",
+        "name": "Groq Chat Model",
+        "credentials": {
+          "groqApi": {
+            "id": "VbjQZKus8XB4sHoP",
+            "name": "Groq account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "calendar": {
+            "__rl": true,
+            "mode": "list",
+            "value": "thewnakasenan@gmail.com"
+          },
+          "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+          "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+          "useDefaultReminders": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Use_Default_Reminders', ``, 'boolean') }}",
+          "additionalFields": {
+            "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') }}",
+            "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+          }
+        },
+        "type": "n8n-nodes-base.googleCalendarTool",
+        "typeVersion": 1.3,
+        "position": [
+          496,
+          288
+        ],
+        "id": "0cc15183-968c-4cf9-9670-4284683c7524",
+        "name": "Create an event in Google Calendar",
+        "credentials": {
+          "googleCalendarOAuth2Api": {
+            "id": "rLbwbvmoFmqNu2JB",
+            "name": "Google Calendar account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "delete",
+          "calendar": {
+            "__rl": true,
+            "value": "thewnakasenan@gmail.com",
+            "mode": "list",
+            "cachedResultName": "thewnakasenan@gmail.com"
+          },
+          "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleCalendarTool",
+        "typeVersion": 1.3,
+        "position": [
+          496,
+          448
+        ],
+        "id": "9b2fafbf-4545-466f-9d86-ca40b0163e6d",
+        "name": "Delete an event in Google Calendar",
+        "credentials": {
+          "googleCalendarOAuth2Api": {
+            "id": "rLbwbvmoFmqNu2JB",
+            "name": "Google Calendar account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "calendar": {
+            "__rl": true,
+            "value": "thewnakasenan@gmail.com",
+            "mode": "list",
+            "cachedResultName": "thewnakasenan@gmail.com"
+          },
+          "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+          "updateFields": {
+            "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') }}",
+            "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+          }
+        },
+        "type": "n8n-nodes-base.googleCalendarTool",
+        "typeVersion": 1.3,
+        "position": [
+          640,
+          288
+        ],
+        "id": "daef56da-43a1-4120-9c7f-7a27ba6d4d42",
+        "name": "Update an event in Google Calendar",
+        "credentials": {
+          "googleCalendarOAuth2Api": {
+            "id": "rLbwbvmoFmqNu2JB",
+            "name": "Google Calendar account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "calendar": {
+            "__rl": true,
+            "value": "thewnakasenan@gmail.com",
+            "mode": "list",
+            "cachedResultName": "thewnakasenan@gmail.com"
+          },
+          "limit": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Limit', ``, 'number') }}",
+          "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
+          "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleCalendarTool",
+        "typeVersion": 1.3,
+        "position": [
+          656,
+          448
+        ],
+        "id": "209c57d9-dec6-48f5-92ba-c599d64a3b5d",
+        "name": "Get many events in Google Calendar",
+        "credentials": {
+          "googleCalendarOAuth2Api": {
+            "id": "rLbwbvmoFmqNu2JB",
+            "name": "Google Calendar account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "resource": "video",
+          "limit": 3,
+          "filters": {
+            "q": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Query', ``, 'string') }}"
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.youTubeTool",
+        "typeVersion": 1,
+        "position": [
+          848,
+          304
+        ],
+        "id": "11689cf2-3c1e-4257-aaa2-f1d7996feb7d",
+        "name": "Get many videos in YouTube",
+        "credentials": {
+          "youTubeOAuth2Api": {
+            "id": "XOjyV4qpZ7WcJdAC",
+            "name": "YouTube account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "limit": 5,
+          "filters": {}
+        },
+        "type": "n8n-nodes-base.gmailTool",
+        "typeVersion": 2.2,
+        "position": [
+          1056,
+          288
+        ],
+        "id": "11e79c30-8680-4f5f-93be-84fbe62c14fc",
+        "name": "Get many messages in Gmail",
+        "webhookId": "36c62be3-1f03-456e-8c9b-485c8654722e",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "SG33etZzvQzP7Wnf",
+            "name": "Gmail account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+          "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+          "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+          "options": {
+            "bccList": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('BCC', ``, 'string') }}",
+            "ccList": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('CC', ``, 'string') }}"
+          }
+        },
+        "type": "n8n-nodes-base.gmailTool",
+        "typeVersion": 2.2,
+        "position": [
+          1056,
+          128
+        ],
+        "id": "83e62f77-1356-4a27-8b8f-af8697260ebd",
+        "name": "Send a message in Gmail",
+        "webhookId": "674a563d-03e8-46f5-9929-8148b0683de5",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "SG33etZzvQzP7Wnf",
+            "name": "Gmail account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "delete",
+          "messageId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message_ID', ``, 'string') }}"
+        },
+        "type": "n8n-nodes-base.gmailTool",
+        "typeVersion": 2.2,
+        "position": [
+          1216,
+          128
+        ],
+        "id": "ea41dc3f-7b6f-4223-b54a-e021b05244c8",
+        "name": "Delete a message in Gmail",
+        "webhookId": "a892bfe2-f0ea-4894-8402-8d0b50cd64a2",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "SG33etZzvQzP7Wnf",
+            "name": "Gmail account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "reply",
+          "messageId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message_ID', ``, 'string') }}",
+          "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+          "options": {
+            "bccList": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('BCC', ``, 'string') }}",
+            "ccList": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('CC', ``, 'string') }}"
+          }
+        },
+        "type": "n8n-nodes-base.gmailTool",
+        "typeVersion": 2.2,
+        "position": [
+          1216,
+          288
+        ],
+        "id": "a07d7920-87ae-4cbe-bbd2-9c56db01a63e",
+        "name": "Reply to a message in Gmail",
+        "webhookId": "d972c26c-a00e-4dbb-b178-95839ac4f135",
+        "credentials": {
+          "gmailOAuth2": {
+            "id": "SG33etZzvQzP7Wnf",
+            "name": "Gmail account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "append",
+          "documentId": {
+            "__rl": true,
+            "value": "1NnUWJJ3iYYlzLBLRMzjExVCU7TVsu2G718w8tBHijOU",
+            "mode": "list",
+            "cachedResultName": "Ai Assistant Log",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NnUWJJ3iYYlzLBLRMzjExVCU7TVsu2G718w8tBHijOU/edit?usp=drivesdk"
+          },
+          "sheetName": {
+            "__rl": true,
+            "value": "gid=0",
+            "mode": "list",
+            "cachedResultName": "Sheet1",
+            "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NnUWJJ3iYYlzLBLRMzjExVCU7TVsu2G718w8tBHijOU/edit#gid=0"
+          },
+          "columns": {
+            "mappingMode": "defineBelow",
+            "value": {
+              "Date": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Date', ``, 'string') }}",
+              "Category": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Category', ``, 'string') }}",
+              "Details": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Details', ``, 'string') }}",
+              "Link": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Link', ``, 'string') }}"
+            },
+            "matchingColumns": [],
+            "schema": [
+              {
+                "id": "Date",
+                "displayName": "Date",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "Category",
+                "displayName": "Category",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "Details",
+                "displayName": "Details",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              },
+              {
+                "id": "Link",
+                "displayName": "Link",
+                "required": false,
+                "defaultMatch": false,
+                "display": true,
+                "type": "string",
+                "canBeUsedToMatch": true
+              }
+            ],
+            "attemptToConvertTypes": false,
+            "convertFieldsToString": false
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.googleSheetsTool",
+        "typeVersion": 4.7,
+        "position": [
+          560,
+          -48
+        ],
+        "id": "0bc5c626-b5ef-419d-9eba-e91caf3668b0",
+        "name": "Append row in sheet in Google Sheets",
+        "credentials": {
+          "googleSheetsOAuth2Api": {
+            "id": "Qi6EI9tJJVi2hGxI",
+            "name": "Google Sheets account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "updates": [
+            "messages"
+          ],
+          "options": {}
+        },
+        "type": "n8n-nodes-base.whatsAppTrigger",
+        "typeVersion": 1,
+        "position": [
+          -64,
+          16
+        ],
+        "id": "e2bfd9cc-5c9a-4bfa-bd5d-157150e12a1a",
+        "name": "WhatsApp Trigger",
+        "webhookId": "01a73f2b-7768-4724-aeeb-e75e35d45524",
+        "credentials": {
+          "whatsAppTriggerApi": {
+            "id": "Z2SNF5jFh8zieOHA",
+            "name": "WhatsApp OAuth account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "send",
+          "phoneNumberId": "={{ $(\"WhatsApp Trigger\").item.json.metadata.phone_number_id }}",
+          "recipientPhoneNumber": "={{ $(\"WhatsApp Trigger\").item.json.messages[0].from }}",
+          "textBody": "={{ $json.output }}",
+          "additionalFields": {}
+        },
+        "type": "n8n-nodes-base.whatsApp",
+        "typeVersion": 1.1,
+        "position": [
+          400,
+          -160
+        ],
+        "id": "whatsapp-sender-node-123",
+        "name": "WhatsApp Send",
+        "webhookId": "58ddf578-c4c0-4a08-ad31-60962f2f9366",
+        "credentials": {
+          "whatsAppApi": {
+            "id": "KbjypGzh8hB9uoAh",
+            "name": "WhatsApp account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "url": "https://trigger.macrodroid.com/ee87dd1d-bbdf-4df4-b9c8-9d10bc515fa8/n8n_sms",
+          "sendQuery": true,
+          "queryParameters": {
+            "parameters": [
+              {
+                "name": "number",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI(\"Number\", \"\", \"string\") }}"
+              },
+              {
+                "name": "message",
+                "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI(\"Message\", \"\", \"string\") }}"
+              }
+            ]
+          },
+          "options": {}
+        },
+        "type": "n8n-nodes-base.httpRequestTool",
+        "typeVersion": 4.2,
+        "position": [
+          32,
+          368
+        ],
+        "id": "macrodroid-sms-tool-123",
+        "name": "Send SMS from my Android"
+      },
+      {
+        "parameters": {
+          "operation": "getAll",
+          "limit": 10,
+          "fields": [
+            "names",
+            "phoneNumbers"
+          ],
+          "useQuery": true,
+          "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI(\"query\", \"Name of the contact to find, e.g. Sasmitha\", \"string\") }}"
+        },
+        "name": "Search_Google_Contacts",
+        "type": "n8n-nodes-base.googleContactsTool",
+        "typeVersion": 1,
+        "position": [
+          224,
+          512
+        ],
+        "id": "google-contacts-tool-123",
+        "credentials": {
+          "googleContactsOAuth2Api": {
+            "id": "iP2b87lxq9dC2K2L",
+            "name": "Google Contacts account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "familyName": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI(\"Family_Name\", \"Family name of the contact\", \"string\") }}",
+          "givenName": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI(\"Given_Name\", \"Given name of the contact\", \"string\") }}",
+          "additionalFields": {
+            "phoneUi": {
+              "phoneValues": [
+                {
+                  "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI(\"Phone_Number\", \"Phone number\", \"string\") }}"
+                }
+              ]
+            }
+          }
+        },
+        "id": "google-contacts-create-tool-123",
+        "name": "Create_Google_Contact",
+        "type": "n8n-nodes-base.googleContactsTool",
+        "typeVersion": 1,
+        "position": [
+          224,
+          624
+        ],
+        "credentials": {
+          "googleContactsOAuth2Api": {
+            "id": "iP2b87lxq9dC2K2L",
+            "name": "Google Contacts account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "delete",
+          "contactId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI(\"Contact_ID\", \"ID of the contact to delete, usually resourceName like people/c1234\", \"string\") }}"
+        },
+        "id": "google-contacts-delete-tool-123",
+        "name": "Delete_Google_Contact",
+        "type": "n8n-nodes-base.googleContactsTool",
+        "typeVersion": 1,
+        "position": [
+          224,
+          720
+        ],
+        "credentials": {
+          "googleContactsOAuth2Api": {
+            "id": "iP2b87lxq9dC2K2L",
+            "name": "Google Contacts account"
+          }
+        }
+      },
+      {
+        "parameters": {
+          "operation": "update",
+          "contactId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI(\"Contact_ID\", \"ID of the contact to update\", \"string\") }}",
+          "updateFields": {
+            "familyName": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI(\"Family_Name\", \"Family name of the contact\", \"string\") }}",
+            "givenName": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI(\"Given_Name\", \"Given name of the contact\", \"string\") }}",
+            "phoneUi": {
+              "phoneValues": [
+                {
+                  "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI(\"Phone_Number\", \"Phone number\", \"string\") }}"
+                }
+              ]
+            }
+          }
+        },
+        "id": "google-contacts-update-tool-123",
+        "name": "Update_Google_Contact",
+        "type": "n8n-nodes-base.googleContactsTool",
+        "typeVersion": 1,
+        "position": [
+          224,
+          816
+        ],
+        "credentials": {
+          "googleContactsOAuth2Api": {
+            "id": "iP2b87lxq9dC2K2L",
+            "name": "Google Contacts account"
+          }
+        }
+      }
+    ],
+    "connections": {
+      "Simple Memory": {
+        "ai_memory": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_memory",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Google search in SerpApi": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "AI Agent": {
+        "main": [
+          [
+            {
+              "node": "WhatsApp Send",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Groq Chat Model": {
+        "ai_languageModel": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_languageModel",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create an event in Google Calendar": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Delete an event in Google Calendar": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Update an event in Google Calendar": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get many events in Google Calendar": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get many videos in YouTube": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Get many messages in Gmail": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send a message in Gmail": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Delete a message in Gmail": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Reply to a message in Gmail": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Append row in sheet in Google Sheets": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "WhatsApp Trigger": {
+        "main": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Send SMS from my Android": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Search_Google_Contacts": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Create_Google_Contact": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Delete_Google_Contact": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Update_Google_Contact": {
+        "ai_tool": [
+          [
+            {
+              "node": "AI Agent",
+              "type": "ai_tool",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "binaryMode": "separate",
+      "availableInMCP": false,
+      "callerPolicy": "workflowsFromSameOwner"
+    },
+    "staticData": null,
+    "meta": {
+      "templateCredsSetupCompleted": true
+    },
+    "pinData": {},
+    "versionId": "04fc0f8b-bc55-4bee-b5b8-86a87fd3583e",
+    "activeVersionId": "04fc0f8b-bc55-4bee-b5b8-86a87fd3583e",
+    "versionCounter": 436,
+    "triggerCount": 1,
+    "shared": [
+      {
+        "updatedAt": "2026-03-11T17:09:52.132Z",
+        "createdAt": "2026-03-11T17:09:52.132Z",
+        "role": "workflow:owner",
+        "workflowId": "PkKgu4sTC3L7pEJ6",
+        "projectId": "UGoANQSMK643I0LS",
+        "project": {
+          "updatedAt": "2026-03-11T13:57:49.025Z",
+          "createdAt": "2026-03-11T13:49:06.078Z",
+          "id": "UGoANQSMK643I0LS",
+          "name": "Senan Thewnaka <thewnakasenan@gmail.com>",
+          "type": "personal",
+          "icon": null,
+          "description": null,
+          "creatorId": "e98947d6-fbb3-4150-8ca5-cbcdf6bca9b7"
+        }
+      }
+    ],
+    "tags": [],
+    "activeVersion": {
+      "updatedAt": "2026-03-16T18:01:01.290Z",
+      "createdAt": "2026-03-16T18:00:55.425Z",
+      "versionId": "04fc0f8b-bc55-4bee-b5b8-86a87fd3583e",
+      "workflowId": "PkKgu4sTC3L7pEJ6",
+      "nodes": [
+        {
+          "parameters": {
+            "sessionIdType": "customKey",
+            "sessionKey": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}"
+          },
+          "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+          "typeVersion": 1.3,
+          "position": [
+            224,
+            208
+          ],
+          "id": "6643f054-ecb6-43d3-8b3f-31624f5d1ac3",
+          "name": "Simple Memory"
+        },
+        {
+          "parameters": {
+            "q": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Search_Query__q_', ``, 'string') }}",
+            "additionalFields": {
+              "num": 5
+            },
+            "requestOptions": {}
+          },
+          "type": "n8n-nodes-serpapi.serpApiTool",
+          "typeVersion": 1,
+          "position": [
+            368,
+            208
+          ],
+          "id": "4ef95fba-8c05-448b-aefc-3cd3485e0436",
+          "name": "Google search in SerpApi",
+          "credentials": {
+            "serpApi": {
+              "id": "dVGdG5yLanehB5uH",
+              "name": "SerpAPI account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "options": {
+              "systemMessage": "=Today's date is {{ $now.setZone('Asia/Colombo').toFormat('cccc, MMMM dd, yyyy') }}. You are Synthora, the Personal Assistant.\n\n### Skills:\n- **Vision**: Analyzes images sent via WhatsApp.\n- **Voice**: Processes voice notes (transcribed as text).\n- **Daily Brief**: Summarizes Calendar & Gmail proactively at 8 AM.\n- **LinkedIn**: Posts to your professional feed.\n\nStay professional and proactive."
+            }
+          },
+          "type": "@n8n/n8n-nodes-langchain.agent",
+          "typeVersion": 3.1,
+          "position": [
+            208,
+            0
+          ],
+          "id": "41ab4eae-052b-4199-8990-705d22c47bb9",
+          "name": "AI Agent",
+          "executeOnce": true,
+          "alwaysOutputData": true
+        },
+        {
+          "parameters": {
+            "model": "llama-3.1-8b-instant",
+            "options": {}
+          },
+          "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+          "typeVersion": 1,
+          "position": [
+            80,
+            208
+          ],
+          "id": "86b71827-1431-49a9-9be1-fb7f450e8599",
+          "name": "Groq Chat Model",
+          "credentials": {
+            "groqApi": {
+              "id": "VbjQZKus8XB4sHoP",
+              "name": "Groq account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "calendar": {
+              "__rl": true,
+              "mode": "list",
+              "value": "thewnakasenan@gmail.com"
+            },
+            "start": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Start', ``, 'string') }}",
+            "end": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('End', ``, 'string') }}",
+            "useDefaultReminders": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Use_Default_Reminders', ``, 'boolean') }}",
+            "additionalFields": {
+              "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') }}",
+              "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+            }
+          },
+          "type": "n8n-nodes-base.googleCalendarTool",
+          "typeVersion": 1.3,
+          "position": [
+            496,
+            288
+          ],
+          "id": "0cc15183-968c-4cf9-9670-4284683c7524",
+          "name": "Create an event in Google Calendar",
+          "credentials": {
+            "googleCalendarOAuth2Api": {
+              "id": "rLbwbvmoFmqNu2JB",
+              "name": "Google Calendar account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "operation": "delete",
+            "calendar": {
+              "__rl": true,
+              "value": "thewnakasenan@gmail.com",
+              "mode": "list",
+              "cachedResultName": "thewnakasenan@gmail.com"
+            },
+            "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.googleCalendarTool",
+          "typeVersion": 1.3,
+          "position": [
+            496,
+            448
+          ],
+          "id": "9b2fafbf-4545-466f-9d86-ca40b0163e6d",
+          "name": "Delete an event in Google Calendar",
+          "credentials": {
+            "googleCalendarOAuth2Api": {
+              "id": "rLbwbvmoFmqNu2JB",
+              "name": "Google Calendar account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "operation": "update",
+            "calendar": {
+              "__rl": true,
+              "value": "thewnakasenan@gmail.com",
+              "mode": "list",
+              "cachedResultName": "thewnakasenan@gmail.com"
+            },
+            "eventId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Event_ID', ``, 'string') }}",
+            "updateFields": {
+              "description": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Description', ``, 'string') }}",
+              "summary": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Summary', ``, 'string') }}"
+            }
+          },
+          "type": "n8n-nodes-base.googleCalendarTool",
+          "typeVersion": 1.3,
+          "position": [
+            640,
+            288
+          ],
+          "id": "daef56da-43a1-4120-9c7f-7a27ba6d4d42",
+          "name": "Update an event in Google Calendar",
+          "credentials": {
+            "googleCalendarOAuth2Api": {
+              "id": "rLbwbvmoFmqNu2JB",
+              "name": "Google Calendar account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "operation": "getAll",
+            "calendar": {
+              "__rl": true,
+              "value": "thewnakasenan@gmail.com",
+              "mode": "list",
+              "cachedResultName": "thewnakasenan@gmail.com"
+            },
+            "limit": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Limit', ``, 'number') }}",
+            "timeMin": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('After', ``, 'string') }}",
+            "timeMax": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Before', ``, 'string') }}",
+            "options": {}
+          },
+          "type": "n8n-nodes-base.googleCalendarTool",
+          "typeVersion": 1.3,
+          "position": [
+            656,
+            448
+          ],
+          "id": "209c57d9-dec6-48f5-92ba-c599d64a3b5d",
+          "name": "Get many events in Google Calendar",
+          "credentials": {
+            "googleCalendarOAuth2Api": {
+              "id": "rLbwbvmoFmqNu2JB",
+              "name": "Google Calendar account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "resource": "video",
+            "limit": 3,
+            "filters": {
+              "q": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Query', ``, 'string') }}"
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.youTubeTool",
+          "typeVersion": 1,
+          "position": [
+            848,
+            304
+          ],
+          "id": "11689cf2-3c1e-4257-aaa2-f1d7996feb7d",
+          "name": "Get many videos in YouTube",
+          "credentials": {
+            "youTubeOAuth2Api": {
+              "id": "XOjyV4qpZ7WcJdAC",
+              "name": "YouTube account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "operation": "getAll",
+            "limit": 5,
+            "filters": {}
+          },
+          "type": "n8n-nodes-base.gmailTool",
+          "typeVersion": 2.2,
+          "position": [
+            1056,
+            288
+          ],
+          "id": "11e79c30-8680-4f5f-93be-84fbe62c14fc",
+          "name": "Get many messages in Gmail",
+          "webhookId": "36c62be3-1f03-456e-8c9b-485c8654722e",
+          "credentials": {
+            "gmailOAuth2": {
+              "id": "SG33etZzvQzP7Wnf",
+              "name": "Gmail account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+            "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+            "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+            "options": {
+              "bccList": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('BCC', ``, 'string') }}",
+              "ccList": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('CC', ``, 'string') }}"
+            }
+          },
+          "type": "n8n-nodes-base.gmailTool",
+          "typeVersion": 2.2,
+          "position": [
+            1056,
+            128
+          ],
+          "id": "83e62f77-1356-4a27-8b8f-af8697260ebd",
+          "name": "Send a message in Gmail",
+          "webhookId": "674a563d-03e8-46f5-9929-8148b0683de5",
+          "credentials": {
+            "gmailOAuth2": {
+              "id": "SG33etZzvQzP7Wnf",
+              "name": "Gmail account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "operation": "delete",
+            "messageId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message_ID', ``, 'string') }}"
+          },
+          "type": "n8n-nodes-base.gmailTool",
+          "typeVersion": 2.2,
+          "position": [
+            1216,
+            128
+          ],
+          "id": "ea41dc3f-7b6f-4223-b54a-e021b05244c8",
+          "name": "Delete a message in Gmail",
+          "webhookId": "a892bfe2-f0ea-4894-8402-8d0b50cd64a2",
+          "credentials": {
+            "gmailOAuth2": {
+              "id": "SG33etZzvQzP7Wnf",
+              "name": "Gmail account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "operation": "reply",
+            "messageId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message_ID', ``, 'string') }}",
+            "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+            "options": {
+              "bccList": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('BCC', ``, 'string') }}",
+              "ccList": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('CC', ``, 'string') }}"
+            }
+          },
+          "type": "n8n-nodes-base.gmailTool",
+          "typeVersion": 2.2,
+          "position": [
+            1216,
+            288
+          ],
+          "id": "a07d7920-87ae-4cbe-bbd2-9c56db01a63e",
+          "name": "Reply to a message in Gmail",
+          "webhookId": "d972c26c-a00e-4dbb-b178-95839ac4f135",
+          "credentials": {
+            "gmailOAuth2": {
+              "id": "SG33etZzvQzP7Wnf",
+              "name": "Gmail account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "operation": "append",
+            "documentId": {
+              "__rl": true,
+              "value": "1NnUWJJ3iYYlzLBLRMzjExVCU7TVsu2G718w8tBHijOU",
+              "mode": "list",
+              "cachedResultName": "Ai Assistant Log",
+              "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NnUWJJ3iYYlzLBLRMzjExVCU7TVsu2G718w8tBHijOU/edit?usp=drivesdk"
+            },
+            "sheetName": {
+              "__rl": true,
+              "value": "gid=0",
+              "mode": "list",
+              "cachedResultName": "Sheet1",
+              "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1NnUWJJ3iYYlzLBLRMzjExVCU7TVsu2G718w8tBHijOU/edit#gid=0"
+            },
+            "columns": {
+              "mappingMode": "defineBelow",
+              "value": {
+                "Date": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Date', ``, 'string') }}",
+                "Category": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Category', ``, 'string') }}",
+                "Details": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Details', ``, 'string') }}",
+                "Link": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Link', ``, 'string') }}"
+              },
+              "matchingColumns": [],
+              "schema": [
+                {
+                  "id": "Date",
+                  "displayName": "Date",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "type": "string",
+                  "canBeUsedToMatch": true
+                },
+                {
+                  "id": "Category",
+                  "displayName": "Category",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "type": "string",
+                  "canBeUsedToMatch": true
+                },
+                {
+                  "id": "Details",
+                  "displayName": "Details",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "type": "string",
+                  "canBeUsedToMatch": true
+                },
+                {
+                  "id": "Link",
+                  "displayName": "Link",
+                  "required": false,
+                  "defaultMatch": false,
+                  "display": true,
+                  "type": "string",
+                  "canBeUsedToMatch": true
+                }
+              ],
+              "attemptToConvertTypes": false,
+              "convertFieldsToString": false
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.googleSheetsTool",
+          "typeVersion": 4.7,
+          "position": [
+            560,
+            -48
+          ],
+          "id": "0bc5c626-b5ef-419d-9eba-e91caf3668b0",
+          "name": "Append row in sheet in Google Sheets",
+          "credentials": {
+            "googleSheetsOAuth2Api": {
+              "id": "Qi6EI9tJJVi2hGxI",
+              "name": "Google Sheets account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "updates": [
+              "messages"
+            ],
+            "options": {}
+          },
+          "type": "n8n-nodes-base.whatsAppTrigger",
+          "typeVersion": 1,
+          "position": [
+            -64,
+            16
+          ],
+          "id": "e2bfd9cc-5c9a-4bfa-bd5d-157150e12a1a",
+          "name": "WhatsApp Trigger",
+          "webhookId": "01a73f2b-7768-4724-aeeb-e75e35d45524",
+          "credentials": {
+            "whatsAppTriggerApi": {
+              "id": "Z2SNF5jFh8zieOHA",
+              "name": "WhatsApp OAuth account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "operation": "send",
+            "phoneNumberId": "={{ $(\"WhatsApp Trigger\").item.json.metadata.phone_number_id }}",
+            "recipientPhoneNumber": "={{ $(\"WhatsApp Trigger\").item.json.messages[0].from }}",
+            "textBody": "={{ $json.output }}",
+            "additionalFields": {}
+          },
+          "type": "n8n-nodes-base.whatsApp",
+          "typeVersion": 1.1,
+          "position": [
+            400,
+            -160
+          ],
+          "id": "whatsapp-sender-node-123",
+          "name": "WhatsApp Send",
+          "webhookId": "58ddf578-c4c0-4a08-ad31-60962f2f9366",
+          "credentials": {
+            "whatsAppApi": {
+              "id": "KbjypGzh8hB9uoAh",
+              "name": "WhatsApp account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "url": "https://trigger.macrodroid.com/ee87dd1d-bbdf-4df4-b9c8-9d10bc515fa8/n8n_sms",
+            "sendQuery": true,
+            "queryParameters": {
+              "parameters": [
+                {
+                  "name": "number",
+                  "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI(\"Number\", \"\", \"string\") }}"
+                },
+                {
+                  "name": "message",
+                  "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI(\"Message\", \"\", \"string\") }}"
+                }
+              ]
+            },
+            "options": {}
+          },
+          "type": "n8n-nodes-base.httpRequestTool",
+          "typeVersion": 4.2,
+          "position": [
+            32,
+            368
+          ],
+          "id": "macrodroid-sms-tool-123",
+          "name": "Send SMS from my Android"
+        },
+        {
+          "parameters": {
+            "operation": "getAll",
+            "limit": 10,
+            "fields": [
+              "names",
+              "phoneNumbers"
+            ],
+            "useQuery": true,
+            "query": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI(\"query\", \"Name of the contact to find, e.g. Sasmitha\", \"string\") }}"
+          },
+          "name": "Search_Google_Contacts",
+          "type": "n8n-nodes-base.googleContactsTool",
+          "typeVersion": 1,
+          "position": [
+            224,
+            512
+          ],
+          "id": "google-contacts-tool-123",
+          "credentials": {
+            "googleContactsOAuth2Api": {
+              "id": "iP2b87lxq9dC2K2L",
+              "name": "Google Contacts account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "familyName": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI(\"Family_Name\", \"Family name of the contact\", \"string\") }}",
+            "givenName": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI(\"Given_Name\", \"Given name of the contact\", \"string\") }}",
+            "additionalFields": {
+              "phoneUi": {
+                "phoneValues": [
+                  {
+                    "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI(\"Phone_Number\", \"Phone number\", \"string\") }}"
+                  }
+                ]
+              }
+            }
+          },
+          "id": "google-contacts-create-tool-123",
+          "name": "Create_Google_Contact",
+          "type": "n8n-nodes-base.googleContactsTool",
+          "typeVersion": 1,
+          "position": [
+            224,
+            624
+          ],
+          "credentials": {
+            "googleContactsOAuth2Api": {
+              "id": "iP2b87lxq9dC2K2L",
+              "name": "Google Contacts account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "operation": "delete",
+            "contactId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI(\"Contact_ID\", \"ID of the contact to delete, usually resourceName like people/c1234\", \"string\") }}"
+          },
+          "id": "google-contacts-delete-tool-123",
+          "name": "Delete_Google_Contact",
+          "type": "n8n-nodes-base.googleContactsTool",
+          "typeVersion": 1,
+          "position": [
+            224,
+            720
+          ],
+          "credentials": {
+            "googleContactsOAuth2Api": {
+              "id": "iP2b87lxq9dC2K2L",
+              "name": "Google Contacts account"
+            }
+          }
+        },
+        {
+          "parameters": {
+            "operation": "update",
+            "contactId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI(\"Contact_ID\", \"ID of the contact to update\", \"string\") }}",
+            "updateFields": {
+              "familyName": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI(\"Family_Name\", \"Family name of the contact\", \"string\") }}",
+              "givenName": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI(\"Given_Name\", \"Given name of the contact\", \"string\") }}",
+              "phoneUi": {
+                "phoneValues": [
+                  {
+                    "value": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI(\"Phone_Number\", \"Phone number\", \"string\") }}"
+                  }
+                ]
+              }
+            }
+          },
+          "id": "google-contacts-update-tool-123",
+          "name": "Update_Google_Contact",
+          "type": "n8n-nodes-base.googleContactsTool",
+          "typeVersion": 1,
+          "position": [
+            224,
+            816
+          ],
+          "credentials": {
+            "googleContactsOAuth2Api": {
+              "id": "iP2b87lxq9dC2K2L",
+              "name": "Google Contacts account"
+            }
+          }
+        }
+      ],
+      "connections": {
+        "Simple Memory": {
+          "ai_memory": [
+            [
+              {
+                "node": "AI Agent",
+                "type": "ai_memory",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Google search in SerpApi": {
+          "ai_tool": [
+            [
+              {
+                "node": "AI Agent",
+                "type": "ai_tool",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "AI Agent": {
+          "main": [
+            [
+              {
+                "node": "WhatsApp Send",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Groq Chat Model": {
+          "ai_languageModel": [
+            [
+              {
+                "node": "AI Agent",
+                "type": "ai_languageModel",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Create an event in Google Calendar": {
+          "ai_tool": [
+            [
+              {
+                "node": "AI Agent",
+                "type": "ai_tool",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Delete an event in Google Calendar": {
+          "ai_tool": [
+            [
+              {
+                "node": "AI Agent",
+                "type": "ai_tool",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Update an event in Google Calendar": {
+          "ai_tool": [
+            [
+              {
+                "node": "AI Agent",
+                "type": "ai_tool",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Get many events in Google Calendar": {
+          "ai_tool": [
+            [
+              {
+                "node": "AI Agent",
+                "type": "ai_tool",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Get many videos in YouTube": {
+          "ai_tool": [
+            [
+              {
+                "node": "AI Agent",
+                "type": "ai_tool",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Get many messages in Gmail": {
+          "ai_tool": [
+            [
+              {
+                "node": "AI Agent",
+                "type": "ai_tool",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Send a message in Gmail": {
+          "ai_tool": [
+            [
+              {
+                "node": "AI Agent",
+                "type": "ai_tool",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Delete a message in Gmail": {
+          "ai_tool": [
+            [
+              {
+                "node": "AI Agent",
+                "type": "ai_tool",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Reply to a message in Gmail": {
+          "ai_tool": [
+            [
+              {
+                "node": "AI Agent",
+                "type": "ai_tool",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Append row in sheet in Google Sheets": {
+          "ai_tool": [
+            [
+              {
+                "node": "AI Agent",
+                "type": "ai_tool",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "WhatsApp Trigger": {
+          "main": [
+            [
+              {
+                "node": "AI Agent",
+                "type": "main",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Send SMS from my Android": {
+          "ai_tool": [
+            [
+              {
+                "node": "AI Agent",
+                "type": "ai_tool",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Search_Google_Contacts": {
+          "ai_tool": [
+            [
+              {
+                "node": "AI Agent",
+                "type": "ai_tool",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Create_Google_Contact": {
+          "ai_tool": [
+            [
+              {
+                "node": "AI Agent",
+                "type": "ai_tool",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Delete_Google_Contact": {
+          "ai_tool": [
+            [
+              {
+                "node": "AI Agent",
+                "type": "ai_tool",
+                "index": 0
+              }
+            ]
+          ]
+        },
+        "Update_Google_Contact": {
+          "ai_tool": [
+            [
+              {
+                "node": "AI Agent",
+                "type": "ai_tool",
+                "index": 0
+              }
+            ]
+          ]
+        }
+      },
+      "authors": "Senan Thewnaka",
+      "name": "Version 04fc0f8b",
+      "description": "",
+      "autosaved": true,
+      "workflowPublishHistory": [
+        {
+          "createdAt": "2026-03-16T18:01:01.287Z",
+          "id": 43,
+          "workflowId": "PkKgu4sTC3L7pEJ6",
+          "versionId": "04fc0f8b-bc55-4bee-b5b8-86a87fd3583e",
+          "event": "activated",
+          "userId": "e98947d6-fbb3-4150-8ca5-cbcdf6bca9b7"
+        }
+      ]
+    }
+  }
+}
