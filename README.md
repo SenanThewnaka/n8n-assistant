@@ -1,30 +1,37 @@
 # Synthora Assistant: WhatsApp AI Workflow for n8n
 
-This repository contains the official **n8n workflow** for Synthora, an AI personal assistant that lives in your WhatsApp.
+This is the n8n workflow for Synthora, an AI assistant that works through WhatsApp. You can use it to manage your calendar, emails, and contacts directly from your phone.
 
-## 🤖 What is Synthora?
-Synthora is a sophisticated **n8n workflow** that uses LangChain and Groq (Llama 3.1) to create an omnipresent assistant. By simply chatting on WhatsApp, you can:
-- 📅 Manage your **Google Calendar**.
-- 📧 Search and summarize your **Gmail**.
-- 📞 Manage **Google Contacts**.
-- 📊 Log ideas to **Google Sheets**.
-- 📺 Search for tech tutorials on **YouTube**.
+## How to use this workflow
 
-## 📦 How to use this workflow
+1. Download the synthora-assistant.json file from the workflows folder.
+2. Open your n8n instance and go to Workflows > Import from File.
+3. Select the JSON file you just downloaded.
 
-1.  **Download the JSON**: Grab the [synthora-assistant.json](workflows/synthora-assistant.json) file from this repository.
-2.  **Import to n8n**:
-    - Open your n8n instance.
-    - Go to **Workflows > Import from File**.
-    - Select the JSON file you downloaded.
-3.  **Requirements**:
-    - An n8n instance.
-    - WhatsApp Business API credentials.
-    - Google Cloud Console access (for Gmail/Calendar/Contacts).
-    - A Groq API Key (or any other LLM provider).
+## Getting the required API keys
 
-## 📄 License
-This workflow is shared under the Apache License 2.0.
+To make this workflow work, you will need to set up the following accounts and get their API keys.
 
----
-*Shared by Senan.*
+### 1. WhatsApp Business API
+Go to the Meta for Developers portal and create a Business App. You will need to set up the WhatsApp product to get your Phone Number ID and a temporary or permanent Access Token.
+
+### 2. Google Cloud (Calendar, Gmail, Contacts)
+Go to the Google Cloud Console and create a new project. Enable the Google Calendar API, Gmail API, and Google People API. You will need to set up OAuth2 credentials to connect these to n8n.
+
+### 3. Groq API
+Sign up at Groq Cloud to get an API key. This workflow uses the llama-3.1-8b-instant model to power the assistant's logic.
+
+### 4. SerpApi
+Sign up at SerpApi to get an API key if you want the assistant to be able to search Google for you.
+
+### 5. YouTube API
+Enable the YouTube Data API v3 in your Google Cloud project to allow the assistant to find tutorials and videos.
+
+## Requirements
+- A running instance of n8n
+- A WhatsApp Business account
+- API keys for the services mentioned above
+
+## License
+This project is shared under the Apache License 2.0.
+
